@@ -8,7 +8,7 @@ function onJobsLoadDone() {
 }
 
 function onJobsLoaded(data) {
-    console.log('onJobsoaded');
+    console.log('onJobsoaded: ', data);
 }
 
 function onJobsLoadFailed() {
@@ -30,7 +30,7 @@ function onClassesLoadDone() {
 }
 
 function onClassesLoaded(data) {
-    console.log('onClassesLoaded');
+    console.log('onClassesLoaded: ', data);
 }
 
 function onClassesLoadFailed() {
