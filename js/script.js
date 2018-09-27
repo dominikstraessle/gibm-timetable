@@ -1,46 +1,22 @@
 "use strict";
 
-function onJobsLoadDone() {
-    console.log('onJobsLoadDone');
+function createSelectElement(id, options) {
+    return `<select class="form-control">${options}</select>`;
 }
 
-function onJobsLoaded(data) {
-    console.log('onJobsoaded');
+function createSelectOption(id, name) {
+    return `<option value="${id}">${name}</option>`;
 }
 
-function onJobsLoadFailed() {
-    console.log('onJobsLoadFailed');
+function handleJobs(data) {
+    let options = [];
+    $.each(data, function (jobs, job) {
+        options.push(createSelectOption(job.beruf_id, job.beruf_name));
+    });
+
+    $('#selects').append(createSelectElement('jobsSelect', options));
 }
 
-function loadJobs() {
-    $.getJSON(
-        'http://sandbox.gibm.ch/berufe.php',
-        onJobsLoaded
-    )
-        .fail(onJobsLoadFailed)
-        .done(onJobsLoadDone);
-}
-
-function onClassesLoadDone() {
-    console.log('onClassesLoadDone');
-}
-
-function onClassesLoaded(data) {
-    console.log('onClassesLoaded');
-}
-
-function onClassesLoadFailed() {
-    console.log('onClassesLoadFailed');
-}
-
-function loadClasses(jobId) {
-    $.getJSON(
-        `http://sandbox.gibm.ch/klassen.php?beruf_id=${jobId}`,
-        onClassesLoaded
-    )
-        .fail(onClassesLoadFailed)
-        .done(onClassesLoadDone)
-}
-
-loadJobs();
-loadClasses(10);
+loadJobs(handleJobs, function () {
+    console.log('failed');
+});
