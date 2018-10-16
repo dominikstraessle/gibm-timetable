@@ -1,8 +1,9 @@
 "use strict";
 $(function () {
 
-    const jobsSelectId = 'jobsSelect';
-    const classesSelectId = 'classesSelect';
+    const jobSelectId = '#jobSelect';
+    const classSelectId = '#classSelect';
+    const timeTableId = '#timeTable';
 
     function mapJobDataToSelectOptions(data) {
         return data
