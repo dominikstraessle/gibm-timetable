@@ -1,21 +1,32 @@
 "use strict";
 
-function createSelectElement(id, options) {
-    return `<select id="${id}" class="form-control">${options}</select>`;
+function getEmptySelectOption() {
+    return '<option value="" selected="selected">Select Job...</option>';
 }
 
 function createSelectOption(id, name) {
     return `<option value="${id}">${name}</option>`;
 }
 
-function removeSelectByIdIfPresent(selectId) {
-    const selectElement = $(`#${selectId}`);
-    if (selectElement.length) {
-        selectElement.remove();
-    }
+function hideElementByIdAndRemoveContent(elementId, type = 'slow') {
+    console.log('Hide: ', elementId);
+    const element = $(elementId);
+    element.hide(type);
+    element.empty();
 }
 
-function addSelectWithIdAndOptions(selectId, options) {
-    removeSelectByIdIfPresent(selectId);
-    $('#selects').append(createSelectElement(selectId, options));
+function refreshSelectWithNewOptions(select, options) {
+    select.empty();
+    $(getEmptySelectOption()).appendTo(select);
+    $.each(options, function (i, option) {
+        console.debug(option);
+        $(option).appendTo(select);
+    });
+}
+
+function showSelectByIdAndRefreshOptions(selectId, options, length = 500) {
+    console.log('Show: ', selectId);
+    const select = $(selectId);
+    select.show(length);
+    refreshSelectWithNewOptions(select, options);
 }
