@@ -65,12 +65,14 @@ function onClassesLoadFailed() {
     console.log('onClassesLoadFailed');
 }
 
-function loadClasses(jobId, onLoaded, onFailed, onDone = function () {
-}) {
-    $.getJSON(
-        `http://sandbox.gibm.ch/klassen.php?beruf_id=${jobId}`,
-        onLoaded
-    )
-        .fail(onFailed)
-        .done(onDone);
+function onJobsLoadDone() {
+    console.log('onJobsLoadDone');
+}
+
+function onJobsLoaded(data) {
+    console.log('onJobsoaded: ', data);
+}
+
+function onJobsLoadFailed() {
+    console.log('onJobsLoadFailed');
 }
