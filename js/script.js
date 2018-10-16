@@ -1,22 +1,28 @@
 "use strict";
+$(function () {
 
-function createSelectElement(id, options) {
-    return `<select class="form-control">${options}</select>`;
-}
+    const jobsSelectId = 'jobsSelect';
+    const classesSelectId = 'classesSelect';
 
-function createSelectOption(id, name) {
-    return `<option value="${id}">${name}</option>`;
-}
+    function mapJobDataToSelectOptions(data) {
+        return data
+            .map(value => createSelectOption(value.beruf_id, value.beruf_name))
+    }
 
-function handleJobs(data) {
-    let options = [];
-    $.each(data, function (jobs, job) {
-        options.push(createSelectOption(job.beruf_id, job.beruf_name));
+    function createOrRefreshJobsSelect(data) {
+        let options = mapJobDataToSelectOptions(data);
+
+        addSelectWithIdAndOptions(jobsSelectId, options);
+    }
+
+    loadJobs(createOrRefreshJobsSelect, function () {
+        console.log('failed');
     });
 
-    $('#selects').append(createSelectElement('jobsSelect', options));
-}
-
-loadJobs(handleJobs, function () {
-    console.log('failed');
+    $(jobsSelectId).on('change', function () {
+        const selectedJobId = this.value;
+        if (selectedJobId !== "") {
+            // loadClasses()
+        }
+    })
 });
