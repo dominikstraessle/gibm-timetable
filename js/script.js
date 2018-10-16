@@ -10,20 +10,54 @@ $(function () {
             .map(value => createSelectOption(value.beruf_id, value.beruf_name))
     }
 
-    function createOrRefreshJobsSelect(data) {
-        let options = mapJobDataToSelectOptions(data);
-
-        addSelectWithIdAndOptions(jobsSelectId, options);
+    function mapClassDataToSelectOptions(data) {
+        return data
+            .map(value => createSelectOption(value.klasse_id, value.klasse_name))
     }
 
-    loadJobs(createOrRefreshJobsSelect, function () {
-        console.log('failed');
-    });
+    function showAndRefreshJobSelect(data) {
+        let options = mapJobDataToSelectOptions(data);
+        showSelectByIdAndRefreshOptions(jobSelectId, options);
+    }
 
-    $(jobsSelectId).on('change', function () {
-        const selectedJobId = this.value;
-        if (selectedJobId !== "") {
-            // loadClasses()
-        }
-    })
+    function showAndRefreshClassSelect(data) {
+        let options = mapClassDataToSelectOptions(data);
+        showSelectByIdAndRefreshOptions(classSelectId, options);
+    }
+
+    function init() {
+        hideElementByIdAndRemoveContent(classSelectId, 'fast');
+
+        loadJobs(showAndRefreshJobSelect, function () {
+            console.log('failed to load jobs');
+        });
+
+        $(jobSelectId).on('change', function () {
+            const selectedJobId = this.value;
+            console.debug('Selected Job: ', selectedJobId);
+            if (selectedJobId !== "") {
+                loadClasses(selectedJobId, showAndRefreshClassSelect, function () {
+                    console.log('failed to load classes');
+                });
+            } else {
+                hideElementByIdAndRemoveContent(classSelectId);
+            }
+        });
+
+        $(classSelectId).on('change', function () {
+            const selectedClassId = this.value;
+            console.debug('Selected Class: ', selectedClassId);
+            if (selectedClassId !== '') {
+                loadTimeTable(selectedClassId, showTimeTable, function () {
+                    console.error('Failed to load classes');
+                });
+            } else {
+                hideElementByIdAndRemoveContent(timeTableId);
+            }
+        })
+    }
+
+    init();
+
+
 });
