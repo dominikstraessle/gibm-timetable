@@ -1,7 +1,7 @@
 "use strict";
 
 function getEmptySelectOption() {
-    return '<option value="" selected="selected">Select Job...</option>';
+    return '<option value="" selected="selected">Select...</option>';
 }
 
 function createSelectOption(id, name) {
@@ -15,7 +15,7 @@ function hideElementByIdAndRemoveContent(elementId, type = 'slow') {
     element.empty();
 }
 
-function refreshSelectWithNewOptions(select, options) {
+function selectContentAppender(select, options) {
     select.empty();
     $(getEmptySelectOption()).appendTo(select);
     $.each(options, function (i, option) {
@@ -24,9 +24,15 @@ function refreshSelectWithNewOptions(select, options) {
     });
 }
 
-function showSelectByIdAndRefreshOptions(selectId, options, length = 500) {
-    console.log('Show: ', selectId);
-    const select = $(selectId);
-    select.show(length);
-    refreshSelectWithNewOptions(select, options);
+function cardGroupContentAppender(cardGroup, cards) {
+    cardGroup.empty();
+    $.each(cards, function (i, card) {
+        $(card).appendTo(cardGroup);
+    });
+}
+
+function showElementByIdAndRefreshContent(elementId, contentList, contentAppender, length = 500) {
+    const element = $(elementId);
+    element.show(length);
+    contentAppender(element, contentList);
 }
