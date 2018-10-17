@@ -3,7 +3,7 @@ $(function () {
 
     const jobSelectId = '#jobSelect';
     const classSelectId = '#classSelect';
-    const timeTableId = '#timeTable';
+    const cardGroupId = '#cardGroup';
 
     function getJobOptionFromObject(value) {
         return createSelectOption(value.beruf_id, value.beruf_name);
@@ -13,19 +13,25 @@ $(function () {
         return createSelectOption(value.klasse_id, value.klasse_name);
     }
 
-    function mapDataToOption(data, getOptionFromObject) {
+    function mapDataToElement(data, getOptionFromObject) {
         return data
             .map(getOptionFromObject);
     }
 
     function showAndRefreshJobSelect(data) {
-        let options = mapDataToOption(data, getJobOptionFromObject);
-        showSelectByIdAndRefreshOptions(jobSelectId, options);
+        let options = mapDataToElement(data, getJobOptionFromObject);
+        showElementByIdAndRefreshContent(jobSelectId, options, selectContentAppender);
     }
 
     function showAndRefreshClassSelect(data) {
-        let options = mapDataToOption(data, getClassOptionFromObject);
-        showSelectByIdAndRefreshOptions(classSelectId, options);
+        let options = mapDataToElement(data, getClassOptionFromObject);
+        showElementByIdAndRefreshContent(classSelectId, options, selectContentAppender);
+    }
+
+    function showTimeTable(data) {
+        console.debug(data);
+        let cards = mapDataToElement(data, getCard);
+        showElementByIdAndRefreshContent(cardGroupId, cards, cardGroupContentAppender);
     }
 
     function handleJobSelected() {
@@ -35,8 +41,10 @@ $(function () {
             loadClasses(selectedJobId, showAndRefreshClassSelect, function () {
                 console.error('Failed to load classes');
             });
+            hideElementByIdAndRemoveContent(cardGroupId)
         } else {
             hideElementByIdAndRemoveContent(classSelectId);
+            hideElementByIdAndRemoveContent(cardGroupId)
         }
     }
 
@@ -48,12 +56,13 @@ $(function () {
                 console.error('Failed to load classes');
             });
         } else {
-            hideElementByIdAndRemoveContent(timeTableId);
+            hideElementByIdAndRemoveContent(cardGroupId);
         }
     }
 
     function init() {
         hideElementByIdAndRemoveContent(classSelectId, 'fast');
+        hideElementByIdAndRemoveContent(cardGroupId, 'fast');
 
         loadJobs(showAndRefreshJobSelect, function () {
             console.error('Failed to load jobs');
