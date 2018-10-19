@@ -19,7 +19,6 @@ function selectContentAppender(select, options) {
     select.empty();
     $(getEmptySelectOption()).appendTo(select);
     $.each(options, function (i, option) {
-        console.debug(option);
         $(option).appendTo(select);
     });
 }
