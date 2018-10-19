@@ -1,8 +1,5 @@
 "use strict";
 
-loadJobs(onJobsLoaded, onJobsLoadFailed, onJobsLoadDone);
-loadClasses(10, onClassesLoaded, onClassesLoadFailed, onClassesLoadDone);
-
 /**
  * Load all jobs
  * @param onLoaded called when request was successful
@@ -50,29 +47,5 @@ function loadTimeTable(classId, onLoaded, onFailed, onDone = function () {
         onLoaded
     )
         .fail(onFailed)
-        .done(onDone());
-}
-
-function onClassesLoadDone() {
-    console.log('onClassesLoadDone');
-}
-
-function onClassesLoaded(data) {
-    console.log('onClassesLoaded: ', data);
-}
-
-function onClassesLoadFailed() {
-    console.log('onClassesLoadFailed');
-}
-
-function onJobsLoadDone() {
-    console.log('onJobsLoadDone');
-}
-
-function onJobsLoaded(data) {
-    console.log('onJobsoaded: ', data);
-}
-
-function onJobsLoadFailed() {
-    console.log('onJobsLoadFailed');
+        .done(onDone);
 }
