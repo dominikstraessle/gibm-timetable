@@ -19,15 +19,8 @@
 <div class="container">
     <select class="form-control mt-3" id="jobSelect"></select>
     <select class="form-control mt-3" id="classSelect"></select>
-    <div class="card-group mt-3" id="cardGroup">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Fach</h5>
-                <p class="card-text">von-bis</p>
-                <p class="card-text">raum</p>
-                <p class="card-text">lehrer</p>
-            </div>
-        </div>
+    <div class="table-responsive mt-3">
+        <table class="table" id="timeTable"></table>
     </div>
 </div>
 <script
@@ -35,7 +28,7 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
 <script src="js/ajax.js"></script>
-<script src="js/cardCreator.js"></script>
+<script src="js/tableContentCreator.js"></script>
 <script src="js/elementManager.js"></script>
 <script src="js/script.js"></script>
 </body>
