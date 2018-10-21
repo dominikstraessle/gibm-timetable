@@ -3,7 +3,7 @@ $(function () {
 
     const jobSelectId = '#jobSelect';
     const classSelectId = '#classSelect';
-    const cardGroupId = '#cardGroup';
+    const timeTableId = '#timeTable';
     const localStorageJobKey = 'jobKey';
     const localStorageClassKey = 'classKey';
 
@@ -40,9 +40,8 @@ $(function () {
 
     }
 
-    function showTimeTableCards(data) {
-        let cards = mapDataToElement(data, getCard);
-        showElementByIdAndRefreshContent(cardGroupId, cards, cardGroupContentAppender);
+    function showTimeTable(data) {
+        showElementByIdAndRefreshContent(timeTableId, data, tableContentAppender)
     }
 
     function handleJobSelected() {
@@ -52,10 +51,10 @@ $(function () {
             loadClasses(selectedJobId, showAndRefreshClassSelect, function () {
                 console.error('Failed to load classes');
             });
-            hideElementByIdAndRemoveContent(cardGroupId)
+            hideElementByIdAndRemoveContent(timeTableId)
         } else {
             hideElementByIdAndRemoveContent(classSelectId);
-            hideElementByIdAndRemoveContent(cardGroupId);
+            hideElementByIdAndRemoveContent(timeTableId);
             localStorage.removeItem(localStorageJobKey);
         }
     }
@@ -64,11 +63,11 @@ $(function () {
         const selectedClassId = this.value;
         if (selectedClassId !== '') {
             localStorage.setItem(localStorageClassKey, selectedClassId);
-            loadTimeTable(selectedClassId, showTimeTableCards, function () {
+            loadTimeTable(selectedClassId, showTimeTable, function () {
                 console.error('Failed to load classes');
             });
         } else {
-            hideElementByIdAndRemoveContent(cardGroupId);
+            hideElementByIdAndRemoveContent(timeTableId);
             localStorage.removeItem(localStorageClassKey);
         }
     }
@@ -84,7 +83,7 @@ $(function () {
 
     function init() {
         hideElementByIdAndRemoveContent(classSelectId, 'fast');
-        hideElementByIdAndRemoveContent(cardGroupId, 'fast');
+        hideElementByIdAndRemoveContent(timeTableId, 'fast');
         initListeners();
 
         loadJobs(showAndRefreshJobSelect, function () {

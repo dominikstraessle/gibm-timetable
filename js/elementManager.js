@@ -23,11 +23,9 @@ function selectContentAppender(select, options) {
     });
 }
 
-function cardGroupContentAppender(cardGroup, cards) {
-    cardGroup.empty();
-    $.each(cards, function (i, card) {
-        $(card).appendTo(cardGroup);
-    });
+function tableContentAppender(table, data) {
+    table.empty();
+    $(getTableContent(data)).appendTo(table);
 }
 
 function showElementByIdAndRefreshContent(elementId, contentList, contentAppender, length = 500) {
