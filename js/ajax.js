@@ -40,10 +40,10 @@ function loadClasses(jobId, onLoaded, onFailed, onDone = function () {
  * @param onFailed called when request failed
  * @param onDone called every time at the end. Default does nothing.
  */
-function loadTimeTable(classId, onLoaded, onFailed, onDone = function () {
+function loadTimeTable(classId, weekAndYear, onLoaded, onFailed, onDone = function () {
 }) {
     $.getJSON(
-        `http://sandbox.gibm.ch/tafel.php?klasse_id=${classId}`,
+        `http://sandbox.gibm.ch/tafel.php?klasse_id=${classId}&woche=${weekAndYear}`,
         onLoaded
     )
         .fail(onFailed)
