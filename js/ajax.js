@@ -36,6 +36,7 @@ function loadClasses(jobId, onLoaded, onFailed, onDone = function () {
 /**
  * Load the timetable of a given class
  * @param classId get timetable of this class
+ * @param weekAndYear of the format ww-YYYY
  * @param onLoaded called when request was successful
  * @param onFailed called when request failed
  * @param onDone called every time at the end. Default does nothing.
