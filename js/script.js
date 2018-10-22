@@ -4,7 +4,7 @@ $(function () {
     const jobSelectId = '#jobSelect';
     const classSelectId = '#classSelect';
     const timeTableId = '#timeTable';
-    const paginationId = '#pagination';
+    const paginationContainerId = '#paginationContainer';
     const weekSetterActualId = '#weekSetterActual';
     const weekSetterPreviousId = '#weekSetterPrevious';
     const weekSetterNextId = '#weekSetterNext';
@@ -49,7 +49,8 @@ $(function () {
     }
 
     function showTimeTable(data) {
-        showElementByIdAndRefreshContent(timeTableId, data, tableContentAppender)
+        showElementByIdAndRefreshContent(timeTableId, data, tableContentAppender);
+        showElementById(paginationContainerId, 300);
     }
 
     function showTimeTableOfWeek(weekAndYear) {
@@ -57,6 +58,7 @@ $(function () {
         $(weekSetterActualId).text(weekAndYear);
 
         hideElementByIdAndRemoveContent(timeTableId);
+        hideElementById(paginationContainerId, 300);
 
         let selectedClass = $(classSelectId).val();
         loadTimeTable(selectedClass, weekAndYear, showTimeTable, function () {
@@ -69,17 +71,17 @@ $(function () {
         if (selectedJobId !== "") {
             //TODO: outsource the bodys to methods -> handleValidJobSelected / handleInvalidJobSelected
             localStorage.setItem(localStorageJobKey, selectedJobId);
-            localStorage.removeItem(localStorageClassKey);
             loadClasses(selectedJobId, showAndRefreshClassSelect, function () {
                 //TODO: show a pop-up with the error and log it as error: create a function with text as parameter
                 console.error('Failed to load classes');
             });
             hideElementByIdAndRemoveContent(timeTableId);
-            hideElementById(paginationId, 'fast');
+            hideElementById(paginationContainerId);
             selectOptionByIdAndLocalStorageKey(classSelectId, localStorageClassKey);
         } else {
             hideElementByIdAndRemoveContent(classSelectId);
             hideElementByIdAndRemoveContent(timeTableId);
+            hideElementById(paginationContainerId);
             localStorage.removeItem(localStorageJobKey);
             selectOptionByIdAndLocalStorageKey(classSelectId, localStorageClassKey);
         }
@@ -92,8 +94,7 @@ $(function () {
             showTimeTableOfWeek($(weekSetterActualId).text())
         } else {
             hideElementByIdAndRemoveContent(timeTableId);
-            hideElementById(paginationId, 'fast');
-            localStorage.removeItem(localStorageClassKey);
+            hideElementById(paginationContainerId);
         }
     }
 
@@ -123,7 +124,7 @@ $(function () {
         $(weekSetterActualId).text(moment().format('ww-YYYY'));
         hideElementByIdAndRemoveContent(classSelectId, 'fast');
         hideElementByIdAndRemoveContent(timeTableId, 'fast');
-        hideElementById(paginationId, 'fast');
+        hideElementById(paginationContainerId, 'fast');
         initListeners();
 
         loadJobs(showAndRefreshJobSelect, function () {
