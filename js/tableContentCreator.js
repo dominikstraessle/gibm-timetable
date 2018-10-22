@@ -34,7 +34,7 @@ function getTableRow(rowData) {
             <td>${moment(rowData.tafel_von, "HH:mm:ss").format("HH:mm")}</td>
             <td>${moment(rowData.tafel_bis, "HH:mm:ss").format("HH:mm")}</td>
             <td>${rowData.tafel_lehrer}</td>
-            <td>${rowData.tafel_fach}</td>
+            <td>${rowData.tafel_longfach}</td>
             <td>${rowData.tafel_raum}</td>
         </tr>`;
 }
