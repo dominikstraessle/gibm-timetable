@@ -5,7 +5,7 @@ $(function () {
     const classSelectId = '#classSelect';
     const timeTableId = '#timeTable';
     const paginationId = '#pagination';
-    const weekSetterActualId = '#weekSetter';
+    const weekSetterActualId = '#weekSetterActual';
     const weekSetterPreviousId = '#weekSetterPrevious';
     const weekSetterNextId = '#weekSetterNext';
 
@@ -52,14 +52,14 @@ $(function () {
         showElementByIdAndRefreshContent(timeTableId, data, tableContentAppender)
     }
 
-    function showTimeTableOfWeek(week) {
+    function showTimeTableOfWeek(weekAndYear) {
 
-        $(weekSetterActualId).val(week);
+        $(weekSetterActualId).text(weekAndYear);
 
         hideElementByIdAndRemoveContent(timeTableId);
 
         let selectedClass = $(classSelectId).val();
-        loadTimeTable(selectedClass, week, showTimeTable, function () {
+        loadTimeTable(selectedClass, weekAndYear, showTimeTable, function () {
             console.error("Failed to load timetable");
         });
     }
@@ -89,9 +89,7 @@ $(function () {
         const selectedClassId = this.value;
         if (selectedClassId !== '') {
             localStorage.setItem(localStorageClassKey, selectedClassId);
-            loadTimeTable(selectedClassId, $(weekSetterActualId).val(), showTimeTable, function () {
-                console.error('Failed to load classes');
-            });
+            showTimeTableOfWeek($(weekSetterActualId).text())
         } else {
             hideElementByIdAndRemoveContent(timeTableId);
             hideElementById(paginationId, 'fast');
@@ -108,14 +106,23 @@ $(function () {
         });
 
         $(weekSetterPreviousId).on('click', function () {
-            let actualWeek = $(weekSetterActualId).text;
-            showTimeTableOfWeek(Number(actualWeek) - 1);
+            let previousWeek = moment($(weekSetterActualId).text(), 'ww-YYYY').subtract(1, 'w');
+            console.log(moment(previousWeek).format('ww-YYYY'));
+            $(weekSetterActualId).text(moment(previousWeek).format('ww-YYYY'));
+            showTimeTableOfWeek(moment(previousWeek).format('ww-YYYY'));
+        });
+        $(weekSetterNextId).on('click', function () {
+            let nextWeek = moment($(weekSetterActualId).text(), 'ww-YYYY').add(1, 'w');
+            console.log(moment(nextWeek).format('ww-YYYY'));
+            $(weekSetterActualId).text(moment(nextWeek).format('ww-YYYY'));
+            showTimeTableOfWeek(moment(nextWeek).format('ww-YYYY'));
         })
     }
 
     function init() {
         //TODO: the weekSetterActual should show ww-yyyy and the ajax.js needs this as argument
-        $(weekSetterActualId).val(moment().week());
+        console.log(moment().format('ww-YYYY'));
+        $(weekSetterActualId).text(moment().format('ww-YYYY'));
         hideElementByIdAndRemoveContent(classSelectId, 'fast');
         hideElementByIdAndRemoveContent(timeTableId, 'fast');
         hideElementById(paginationId, 'fast');
