@@ -32,6 +32,10 @@ function tableContentAppender(table, data) {
     $(getTableContent(data)).appendTo(table);
 }
 
+function showElementById(elementId, length = 500) {
+    $(elementId).show(length);
+}
+
 function showElementByIdAndRefreshContent(elementId, contentList, contentAppender, length = 500) {
     const element = $(elementId);
     element.show(length);
