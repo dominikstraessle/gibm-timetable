@@ -120,8 +120,6 @@ $(function () {
     }
 
     function init() {
-        //TODO: the weekSetterActual should show ww-yyyy and the ajax.js needs this as argument
-        console.log(moment().format('ww-YYYY'));
         $(weekSetterActualId).text(moment().format('ww-YYYY'));
         hideElementByIdAndRemoveContent(classSelectId, 'fast');
         hideElementByIdAndRemoveContent(timeTableId, 'fast');
