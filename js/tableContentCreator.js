@@ -29,10 +29,10 @@ function getTableBody(data) {
 
 function getTableRow(rowData) {
     return `<tr>
-            <th scope="row">${rowData.tafel_datum}</th>
-            <td>${rowData.tafel_wochentag}</td>
-            <td>${rowData.tafel_von}</td>
-            <td>${rowData.tafel_bis}</td>
+            <th scope="row">${moment(rowData.tafel_datum).format('DD.MM.YYYY')}</th>
+            <td>${moment(rowData.tafel_datum).day(rowData.tafel_wochentag).format('dddd')}</td>
+            <td>${moment(rowData.tafel_von, "HH:mm:ss").format("HH:mm")}</td>
+            <td>${moment(rowData.tafel_bis, "HH:mm:ss").format("HH:mm")}</td>
             <td>${rowData.tafel_lehrer}</td>
             <td>${rowData.tafel_fach}</td>
             <td>${rowData.tafel_raum}</td>
