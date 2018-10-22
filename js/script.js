@@ -29,6 +29,9 @@ $(function () {
         let valueFromLocalStorage = localStorage.getItem(localStorageKey);
         if (valueFromLocalStorage !== null) {
             $(selectId).val(valueFromLocalStorage).change();
+        } else {
+            console.log('Set to empty:', selectId);
+            $(selectId).val('').change();
         }
     }
 
@@ -64,16 +67,21 @@ $(function () {
     function handleJobSelected() {
         const selectedJobId = this.value;
         if (selectedJobId !== "") {
+            //TODO: outsource the bodys to methods -> handleValidJobSelected / handleInvalidJobSelected
             localStorage.setItem(localStorageJobKey, selectedJobId);
+            localStorage.removeItem(localStorageClassKey);
             loadClasses(selectedJobId, showAndRefreshClassSelect, function () {
+                //TODO: show a pop-up with the error and log it as error: create a function with text as parameter
                 console.error('Failed to load classes');
             });
             hideElementByIdAndRemoveContent(timeTableId);
             hideElementById(paginationId, 'fast');
+            selectOptionByIdAndLocalStorageKey(classSelectId, localStorageClassKey);
         } else {
             hideElementByIdAndRemoveContent(classSelectId);
             hideElementByIdAndRemoveContent(timeTableId);
             localStorage.removeItem(localStorageJobKey);
+            selectOptionByIdAndLocalStorageKey(classSelectId, localStorageClassKey);
         }
     }
 
