@@ -49,6 +49,18 @@ $(function () {
         showElementByIdAndRefreshContent(timeTableId, data, tableContentAppender)
     }
 
+    function showTimeTableOfWeek(week) {
+
+        $(weekSetterActualId).val(week);
+
+        hideElementByIdAndRemoveContent(timeTableId);
+
+        let selectedClass = $(classSelectId).val();
+        loadTimeTable(selectedClass, week, showTimeTable, function () {
+            console.error("Failed to load timetable");
+        });
+    }
+
     function handleJobSelected() {
         const selectedJobId = this.value;
         if (selectedJobId !== "") {
@@ -56,7 +68,8 @@ $(function () {
             loadClasses(selectedJobId, showAndRefreshClassSelect, function () {
                 console.error('Failed to load classes');
             });
-            hideElementByIdAndRemoveContent(timeTableId)
+            hideElementByIdAndRemoveContent(timeTableId);
+            hideElementById(paginationId, 'fast');
         } else {
             hideElementByIdAndRemoveContent(classSelectId);
             hideElementByIdAndRemoveContent(timeTableId);
@@ -68,11 +81,12 @@ $(function () {
         const selectedClassId = this.value;
         if (selectedClassId !== '') {
             localStorage.setItem(localStorageClassKey, selectedClassId);
-            loadTimeTable(selectedClassId, showTimeTable, function () {
+            loadTimeTable(selectedClassId, $(weekSetterActualId).val(), showTimeTable, function () {
                 console.error('Failed to load classes');
             });
         } else {
             hideElementByIdAndRemoveContent(timeTableId);
+            hideElementById(paginationId, 'fast');
             localStorage.removeItem(localStorageClassKey);
         }
     }
@@ -84,11 +98,19 @@ $(function () {
         $(classSelectId).on('change', function () {
             handleClassSelected.call(this);
         });
+
+        $(weekSetterPreviousId).on('click', function () {
+            let actualWeek = $(weekSetterActualId).text;
+            showTimeTableOfWeek(Number(actualWeek) - 1);
+        })
     }
 
     function init() {
+        //TODO: the weekSetterActual should show ww-yyyy and the ajax.js needs this as argument
+        $(weekSetterActualId).val(moment().week());
         hideElementByIdAndRemoveContent(classSelectId, 'fast');
         hideElementByIdAndRemoveContent(timeTableId, 'fast');
+        hideElementById(paginationId, 'fast');
         initListeners();
 
         loadJobs(showAndRefreshJobSelect, function () {
