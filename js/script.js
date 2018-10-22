@@ -4,6 +4,11 @@ $(function () {
     const jobSelectId = '#jobSelect';
     const classSelectId = '#classSelect';
     const timeTableId = '#timeTable';
+    const paginationId = '#pagination';
+    const weekSetterActualId = '#weekSetter';
+    const weekSetterPreviousId = '#weekSetterPrevious';
+    const weekSetterNextId = '#weekSetterNext';
+
     const localStorageJobKey = 'jobKey';
     const localStorageClassKey = 'classKey';
 
