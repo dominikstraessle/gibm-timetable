@@ -15,6 +15,10 @@ function hideElementByIdAndRemoveContent(elementId, type = 'slow') {
     element.empty();
 }
 
+function hideElementById(elementId, mode = 'slow') {
+    $(elementId).hide(mode);
+}
+
 function selectContentAppender(select, options) {
     select.empty();
     $(getEmptySelectOption()).appendTo(select);
