@@ -3,6 +3,9 @@ $(function () {
     // only true until @handleValidJobSelected is called the first time
     let startup = true;
 
+    // actual date
+    let actualDate = moment();
+
     // id's of the html elements
     const jobSelectId = '#jobSelect';
     const classSelectId = '#classSelect';
@@ -116,23 +119,23 @@ $(function () {
 
         $(weekSetterPreviousId).on('click', function () {
             // subtract one week
-            let previousWeek = moment($(weekSetterActualId).text(), 'ww-YYYY').subtract(1, 'w');
+            actualDate = moment(actualDate).subtract(1, 'w');
 
-            $(weekSetterActualId).text(moment(previousWeek).format('ww-YYYY'));
-            showTimeTableOfWeek(moment(previousWeek).format('ww-YYYY'));
+            $(weekSetterActualId).text(moment(actualDate).format('ww-YYYY'));
+            showTimeTableOfWeek(moment(actualDate).format('ww-YYYY'));
         });
         $(weekSetterNextId).on('click', function () {
             // add one week
-            let nextWeek = moment($(weekSetterActualId).text(), 'ww-YYYY').add(1, 'w');
+            actualDate = moment(actualDate).add(1, 'w');
 
-            $(weekSetterActualId).text(moment(nextWeek).format('ww-YYYY'));
-            showTimeTableOfWeek(moment(nextWeek).format('ww-YYYY'));
+            $(weekSetterActualId).text(moment(actualDate).format('ww-YYYY'));
+            showTimeTableOfWeek(moment(actualDate).format('ww-YYYY'));
         })
     }
 
     function initElements() {
         // set the actual ww-YYYY as text of the actual week
-        $(weekSetterActualId).text(moment().format('ww-YYYY'));
+        $(weekSetterActualId).text(moment(actualDate).format('ww-YYYY'));
 
         hideElementByIdAndRemoveContent(classSelectId, 'fast');
         hideElementByIdAndRemoveContent(timeTableId, 'fast');
