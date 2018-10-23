@@ -61,9 +61,13 @@ $(function () {
         hideElementById(paginationContainerId, 300);
 
         let selectedClass = $(classSelectId).val();
-        loadTimeTable(selectedClass, weekAndYear, showTimeTable, function () {
-            console.error("Failed to load timetable");
-        });
+        loadTimeTable(selectedClass, weekAndYear, showTimeTable, errorPopupWithMessage('Failed to load timetable'));
+    }
+
+    function errorPopupWithMessage(message) {
+        return function () {
+            alert(message);
+        }
     }
 
     function handleJobSelected() {
@@ -71,10 +75,7 @@ $(function () {
         if (selectedJobId !== "") {
             //TODO: outsource the bodys to methods -> handleValidJobSelected / handleInvalidJobSelected
             localStorage.setItem(localStorageJobKey, selectedJobId);
-            loadClasses(selectedJobId, showAndRefreshClassSelect, function () {
-                //TODO: show a pop-up with the error and log it as error: create a function with text as parameter
-                console.error('Failed to load classes');
-            });
+            loadClasses(selectedJobId, showAndRefreshClassSelect, errorPopupWithMessage('Failed to load classes'));
             hideElementByIdAndRemoveContent(timeTableId);
             hideElementById(paginationContainerId);
             selectOptionByIdAndLocalStorageKey(classSelectId, localStorageClassKey);
@@ -127,9 +128,7 @@ $(function () {
         hideElementById(paginationContainerId, 'fast');
         initListeners();
 
-        loadJobs(showAndRefreshJobSelect, function () {
-            console.error('Failed to load jobs');
-        });
+        loadJobs(showAndRefreshJobSelect, errorPopupWithMessage('Failed to load jobs'));
     }
 
     init();
