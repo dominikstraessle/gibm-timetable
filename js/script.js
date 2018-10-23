@@ -8,6 +8,7 @@ $(function () {
     const weekSetterActualId = '#weekSetterActual';
     const weekSetterPreviousId = '#weekSetterPrevious';
     const weekSetterNextId = '#weekSetterNext';
+    const noDataAlertId = '#noDataAlert';
 
     const localStorageJobKey = 'jobKey';
     const localStorageClassKey = 'classKey';
@@ -49,8 +50,14 @@ $(function () {
     }
 
     function showTimeTable(data) {
-        showElementByIdAndRefreshContent(timeTableId, data, tableContentAppender);
-        showElementById(paginationContainerId, 300);
+        if (data.length > 0) {
+            hideElementById(noDataAlertId);
+            showElementByIdAndRefreshContent(timeTableId, data, tableContentAppender);
+            showElementById(paginationContainerId, 300);
+        } else {
+            showElementById(paginationContainerId, 300);
+            showElementById(noDataAlertId);
+        }
     }
 
     function showTimeTableOfWeek(weekAndYear) {
@@ -126,6 +133,7 @@ $(function () {
         hideElementByIdAndRemoveContent(classSelectId, 'fast');
         hideElementByIdAndRemoveContent(timeTableId, 'fast');
         hideElementById(paginationContainerId, 'fast');
+        hideElementById(noDataAlertId, 'fast');
         initListeners();
 
         loadJobs(showAndRefreshJobSelect, errorPopupWithMessage('Failed to load jobs'));
