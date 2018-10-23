@@ -1,13 +1,5 @@
 "use strict";
 
-function getEmptySelectOption() {
-    return '<option value="" selected="selected">Select...</option>';
-}
-
-function createSelectOption(id, name) {
-    return `<option value="${id}">${name}</option>`;
-}
-
 function hideElementByIdAndRemoveContent(elementId, type = 'slow') {
     console.log('Hide: ', elementId);
     const element = $(elementId);
@@ -40,4 +32,10 @@ function showElementByIdAndRefreshContent(elementId, contentList, contentAppende
     const element = $(elementId);
     element.show(length);
     contentAppender(element, contentList);
+}
+
+function errorPopupWithMessage(message) {
+    return function () {
+        alert(message);
+    }
 }
