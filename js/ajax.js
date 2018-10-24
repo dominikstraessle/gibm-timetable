@@ -9,7 +9,7 @@
 function loadJobs(onLoaded, onFailed, onDone = function () {
 }) {
     $.getJSON(
-        'http://sandbox.gibm.ch/berufe.php',
+        'https://sandbox.gibm.ch/berufe.php',
         onLoaded
     )
         .fail(onFailed)
@@ -26,7 +26,7 @@ function loadJobs(onLoaded, onFailed, onDone = function () {
 function loadClasses(jobId, onLoaded, onFailed, onDone = function () {
 }) {
     $.getJSON(
-        `http://sandbox.gibm.ch/klassen.php?beruf_id=${jobId}`,
+        `https://sandbox.gibm.ch/klassen.php?beruf_id=${jobId}`,
         onLoaded
     )
         .fail(onFailed)
@@ -44,7 +44,7 @@ function loadClasses(jobId, onLoaded, onFailed, onDone = function () {
 function loadTimeTable(classId, weekAndYear, onLoaded, onFailed, onDone = function () {
 }) {
     $.getJSON(
-        `http://sandbox.gibm.ch/tafel.php?klasse_id=${classId}&woche=${weekAndYear}`,
+        `https://sandbox.gibm.ch/tafel.php?klasse_id=${classId}&woche=${weekAndYear}`,
         onLoaded
     )
         .fail(onFailed)
